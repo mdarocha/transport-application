@@ -1,0 +1,36 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: transport-app-database
+    build: ./database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+    volumes:
+       - postgres:/data/postgres
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  app:
+    image: transport-app
+    build: ./
+    networks:
+      - postgres
+    restart: unless-stopped
+    ports:
+      - 80:80
+    environment:
+      JwtSecret: test123456789012345
+      ConnectionString: "User ID=postgres;Password=password;Host=postgres;Database=postgres"
+      Audience: "http://localhost"
+      Issuer: "http://localhost"
+      MapboxToken: "pk.eyJ1IjoibWFwYm94dXNlcjQzNDMyIiwiYSI6ImNrZTV5NW0yZDE3bWQyeWxmYnBheG1vZ2gifQ.9C5DdeA8ulnJFtyomNRs_Q"
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+    postgres:

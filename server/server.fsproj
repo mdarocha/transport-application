@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Release'">
+    <DefineConstants>TESTS</DefineConstants>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Utils/Misc.fs" />
+    <Compile Include="Utils/Configuration.fs" />
+    <Compile Include="Utils/Database.fs" />
+    <Compile Include="Utils/Validation.fs" />
+    <Compile Include="Utils/Authentication.fs" />
+
+    <Compile Include="Entities/User.fs" />
+    <Compile Include="Entities/Place.fs" />
+    <Compile Include="Entities/Order.fs" />
+    <Compile Include="Entities/Location.fs" />
+
+    <Compile Include="Database/UserRepository.fs" />
+    <Compile Include="Database/PlaceRepository.fs" />
+    <Compile Include="Database/LocationRepository.fs" />
+    <Compile Include="Database/OrderRepository.fs" />
+
+    <Compile Include="Handlers/Authentication.fs" />
+    <Compile Include="Handlers/WebSocket.fs" />
+    <Compile Include="Handlers/PlaceOrder.fs" />
+    <Compile Include="Handlers/Job.fs" />
+    <Compile Include="Handlers/Tracker.fs" />
+
+    <Compile Include="Handlers/Root.fs" />
+
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dapper" Version="2.0.35" />
+    <PackageReference Include="Giraffe" Version="4.1.0" />
+    <PackageReference Include="Giraffe.ViewEngine" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="2.2.1" />
+    <PackageReference Include="npgsql" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Release'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="FsUNit" Version="4.0.1" />
+  </ItemGroup>
+</Project>
+<!-- vim: set ts=2 sw=2 : -->
